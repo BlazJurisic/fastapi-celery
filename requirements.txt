@@ -1,0 +1,7 @@
+celery
+fastapi
+flower
+python-dotenv
+redis
+starlette
+uvicorn
