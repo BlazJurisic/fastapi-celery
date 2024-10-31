@@ -16,9 +16,8 @@ services:
     image: redis:7.2.4
 
   celery_worker:
-    container_name: celery_worker
     build: .
-    command: celery -A celery_worker.celery worker --loglevel=info
+    command: watchmedo auto-restart --directory=/app --pattern=*.py --recursive -- celery -A src.celery_worker.celery worker --loglevel=ERROR
     volumes:
       - .:/app
     environment:
@@ -27,6 +26,7 @@ services:
     depends_on:
       - app
       - redis
+    restart: always
 
   flower:
     container_name: flower
@@ -40,4 +40,4 @@ services:
     depends_on:
       - app
       - redis
-      - celery_worker
+      # - celery_worker
